@@ -23,6 +23,8 @@
 
 package net.sf.portecle;
 
+import static java.util.Arrays.asList;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -69,6 +71,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -118,7 +121,6 @@ import javax.swing.table.TableColumn;
 
 import org.bouncycastle.openssl.PEMEncryptor;
 import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.PasswordFinder;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
 import org.bouncycastle.openssl.jcajce.JcePEMEncryptorBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
@@ -147,8 +149,6 @@ import net.sf.portecle.gui.password.DGetPassword;
 import net.sf.portecle.gui.statusbar.StatusBar;
 import net.sf.portecle.gui.statusbar.StatusBarChangeHandler;
 
-import static java.util.Arrays.asList;
-
 /**
  * Start class and main frame of Portecle.
  */
@@ -157,6 +157,9 @@ public class FPortecle
     extends JFrame
     implements StatusBar
 {
+	@SuppressWarnings("deprecation")
+	private static final int INPUT_EVENT_CTRL_MASK = InputEvent.CTRL_MASK;
+
 	/** Resource bundle base name */
 	private static final String RB_BASENAME = FPortecle.class.getPackage().getName() + "/resources";
 
@@ -3274,28 +3277,27 @@ public class FPortecle
 
 		ArrayList<Exception> exceptions = new ArrayList<>();
 
-		PasswordFinder passwordFinder = new PasswordFinder()
-		{
+		final var passwordSupplier = new Supplier<char[]>() {
+
 			private int passwordNumber = 1;
 
 			@Override
-			public char[] getPassword()
-			{
+			public char[] get() {
 				// Get the user to enter the private key password
-				DGetPassword dGetPassword = new DGetPassword(FPortecle.this, MessageFormat.format(
+				final var dGetPassword = new DGetPassword(FPortecle.this, MessageFormat.format(
 				    RB.getString("FPortecle.PrivateKeyPassword.Title"), String.valueOf(passwordNumber)));
 				dGetPassword.setLocationRelativeTo(FPortecle.this);
 				SwingHelper.showAndWait(dGetPassword);
-				char[] cPassword = dGetPassword.getPassword();
+				final var cPassword = dGetPassword.getPassword();
 				passwordNumber++;
-				return cPassword;
+				return    cPassword;
 			}
 		};
 
 		KeyStore tempStore = null;
 		try (PEMParser reader = new PEMParser(new FileReader(fKeyPairFile.getPath())))
 		{
-			tempStore = KeyStoreUtil.loadEntries(reader, passwordFinder);
+			tempStore = KeyStoreUtil.loadEntries(reader, passwordSupplier);
 			if (tempStore.size() == 0)
 			{
 				tempStore = null;
@@ -5840,7 +5842,7 @@ public class FPortecle
 		public NewKeyStoreAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.NewKeyStoreAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.NewKeyStoreAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 
 			putValue(LONG_DESCRIPTION,                  RB.getString("FPortecle.NewKeyStoreAction.statusbar"));
 			putValue(MNEMONIC_KEY,      Integer.valueOf(RB.getString("FPortecle.NewKeyStoreAction.mnemonic").charAt(0)));
@@ -5872,7 +5874,7 @@ public class FPortecle
 		public SaveKeyStoreAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.SaveKeyStoreAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.SaveKeyStoreAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.SaveKeyStoreAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.SaveKeyStoreAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.SaveKeyStoreAction.text"));
@@ -5903,7 +5905,7 @@ public class FPortecle
 		public OpenKeyStoreFileAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.OpenKeyStoreFileAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.OpenKeyStoreFileAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.OpenKeyStoreFileAction.statusbar"));
 			putValue(MNEMONIC_KEY,
 			    Integer.valueOf(RB.getString("FPortecle.OpenKeyStoreFileAction.mnemonic").charAt(0)));
@@ -5935,7 +5937,7 @@ public class FPortecle
 		public OpenCaCertsKeyStoreAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.OpenCaCertsKeyStoreAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.OpenCaCertsKeyStoreAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.OpenCaCertsKeyStoreAction.statusbar"));
 			putValue(MNEMONIC_KEY,
 			    Integer.valueOf(RB.getString("FPortecle.OpenCaCertsKeyStoreAction.mnemonic").charAt(0)));
@@ -5967,7 +5969,7 @@ public class FPortecle
 		public GenKeyPairAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.GenKeyPairAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.GenKeyPairAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.GenKeyPairAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.GenKeyPairAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.GenKeyPairAction.text"));
@@ -5998,7 +6000,7 @@ public class FPortecle
 		public ImportTrustCertAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ImportTrustCertAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ImportTrustCertAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ImportTrustCertAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ImportTrustCertAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ImportTrustCertAction.text"));
@@ -6029,7 +6031,7 @@ public class FPortecle
 		public ImportKeyPairAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ImportKeyPairAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ImportKeyPairAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ImportKeyPairAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ImportKeyPairAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ImportKeyPairAction.text"));
@@ -6060,7 +6062,7 @@ public class FPortecle
 		public SetKeyStorePassAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.SetKeyStorePassAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.SetKeyStorePassAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.SetKeyStorePassAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.SetKeyStorePassAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.SetKeyStorePassAction.text"));
@@ -6091,7 +6093,7 @@ public class FPortecle
 		public KeyStoreReportAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.KeyStoreReportAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.KeyStoreReportAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.KeyStoreReportAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.KeyStoreReportAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.KeyStoreReportAction.text"));
@@ -6122,7 +6124,7 @@ public class FPortecle
 		public ExamineCertAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ExamineCertAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ExamineCertAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ExamineCertAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ExamineCertAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ExamineCertAction.text"));
@@ -6153,7 +6155,7 @@ public class FPortecle
 		public ExamineCertSSLAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ExamineCertSSLAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ExamineCertSSLAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ExamineCertSSLAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ExamineCertSSLAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ExamineCertSSLAction.text"));
@@ -6184,7 +6186,7 @@ public class FPortecle
 		public ExamineCsrAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ExamineCsrAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ExamineCsrAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ExamineCsrAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ExamineCsrAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ExamineCsrAction.text"));
@@ -6215,7 +6217,7 @@ public class FPortecle
 		public ExamineCrlAction()
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
-			    RB.getString("FPortecle.ExamineCrlAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
+			    RB.getString("FPortecle.ExamineCrlAction.accelerator").charAt(0), INPUT_EVENT_CTRL_MASK));
 			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.ExamineCrlAction.statusbar"));
 			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.ExamineCrlAction.mnemonic").charAt(0)));
 			putValue(NAME, RB.getString("FPortecle.ExamineCrlAction.text"));

@@ -45,13 +45,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.function.Supplier;
 
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.openssl.PEMDecryptorProvider;
 import org.bouncycastle.openssl.PEMEncryptedKeyPair;
 import org.bouncycastle.openssl.PEMKeyPair;
 import org.bouncycastle.openssl.PEMParser;
-import org.bouncycastle.openssl.PasswordFinder;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.bouncycastle.openssl.jcajce.JcePEMDecryptorProviderBuilder;
 
@@ -155,7 +155,7 @@ public final class KeyStoreUtil
 	 * @throws CryptoException Problem encountered creating the keystore
 	 * @throws IOException An I/O error occurred
 	 */
-	public static KeyStore loadEntries(PEMParser reader, PasswordFinder pwFinder)
+	public static KeyStore loadEntries(final PEMParser reader, final Supplier<char[]> pwSupplier)
 	    throws CertificateException, CryptoException, IOException
 	{
 		LinkedHashSet<KeyPair> keyPairs = new LinkedHashSet<>();
@@ -170,7 +170,7 @@ public final class KeyStoreUtil
 		{
 			if (obj instanceof PEMEncryptedKeyPair)
 			{
-				PEMDecryptorProvider decryptor = new JcePEMDecryptorProviderBuilder().build(pwFinder.getPassword());
+				PEMDecryptorProvider decryptor = new JcePEMDecryptorProviderBuilder().build(pwSupplier.get());
 				obj = ((PEMEncryptedKeyPair) obj).decryptKeyPair(decryptor);
 			}
 			if (obj instanceof PEMKeyPair)
