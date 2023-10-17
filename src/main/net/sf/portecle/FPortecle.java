@@ -160,6 +160,8 @@ public class FPortecle
 	@SuppressWarnings("deprecation")
 	private static final int INPUT_EVENT_CTRL_MASK = InputEvent.CTRL_MASK;
 
+	private static final org.slf4j.Logger FX_LOG = org.slf4j.LoggerFactory.getLogger(FPortecle.class);
+
 	/** Resource bundle base name */
 	private static final String RB_BASENAME = FPortecle.class.getPackage().getName() + "/resources";
 
@@ -415,7 +417,10 @@ public class FPortecle
 
 	private void setApplicationIcon()
 	{
-		setIconImages(asList(getResImage("FPortecle.Icon.image.16"),
+		FX_LOG.info("setApplicationIcon.: {}");
+
+		setIconImages(asList(
+				getResImage("FPortecle.Icon.image.16"),
 				getResImage("FPortecle.Icon.image.32"),
 				getResImage("FPortecle.Icon.image.64"),
 				getResImage("FPortecle.Icon.image.96"),
@@ -5758,9 +5763,16 @@ public class FPortecle
 	 * @param key the image's key
 	 * @return the Image corresponding to the key
 	 */
-	private Image getResImage(String key)
-	{
-		return Toolkit.getDefaultToolkit().createImage(FPortecle.class.getResource(RB.getString(key)));
+	private Image getResImage(String key) {
+		FX_LOG.info("getResImage........: {}",       key);
+
+		final var rbString = RB.getString(key);
+		FX_LOG.info("getResImage........: {} {}",    key, rbString);
+
+		final var resource = FPortecle.class.getResource(rbString);
+		FX_LOG.info("getResImage........: {} {} {}", key, rbString, resource);
+
+		return Toolkit.getDefaultToolkit().createImage(resource);
 	}
 
 	/**
@@ -6501,7 +6513,8 @@ public class FPortecle
 			}
 
 			// Check BC version
-			Double bcVer = bcProv.getVersion();
+			@SuppressWarnings("deprecation")
+			final var bcVer = bcProv.getVersion();
 			if (REQ_BC_VERSION.compareTo(bcVer) > 0)
 			{
 				JOptionPane.showMessageDialog(new JFrame(),

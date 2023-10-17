@@ -143,7 +143,7 @@ public class DProviderInfo
 
 			// Add child nodes to the provider node for provider description and version
 			providerNode.add(new DefaultMutableTreeNode(provider.getInfo()));
-			providerNode.add(new DefaultMutableTreeNode("" + provider.getVersion()));
+			providerNode.add(new DefaultMutableTreeNode("" + provider.getVersionStr()));
 
 			// Create another child node called properties and...
 			DefaultMutableTreeNode providerPropertiesNode =
@@ -183,7 +183,7 @@ public class DProviderInfo
 			strBuff.append(MessageFormat.format(RB.getString("DProviderInfo.Copy.ProviderName"), provider.getName()));
 			strBuff.append('\n');
 			strBuff.append(
-			    MessageFormat.format(RB.getString("DProviderInfo.Copy.ProviderVersion"), provider.getVersion()));
+			    MessageFormat.format(RB.getString("DProviderInfo.Copy.ProviderVersion"), provider.getVersionStr()));
 			strBuff.append('\n');
 			strBuff.append(
 			    MessageFormat.format(RB.getString("DProviderInfo.Copy.ProviderDescription"), provider.getInfo()));
