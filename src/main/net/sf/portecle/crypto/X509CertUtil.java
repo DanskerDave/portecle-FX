@@ -140,73 +140,72 @@ public final class X509CertUtil
 	 * @return The certificates
 	 * @throws CryptoException Problem encountered while loading the certificate(s)
 	 */
-	private static X509Certificate[] loadCertificates(URL url, String encoding)
-	    throws CryptoException
-	{
-		// TODO: connect/read timeouts
-
-		Collection certs;
-
-		try (InputStream in = NetUtil.openGetStream(url))
+	private static X509Certificate[] loadCertificates(final URL url, final String encoding) throws CryptoException {
+		/*
+		 * TODO: connect/read timeouts
+		 */
+		try (final var in = NetUtil.openGetStream(url))
 		{
+			final Collection<X509Certificate> certs;
+
+			final var cf = CertificateFactory.getInstance(X509_CERT_TYPE);
+
 			if (OPENSSL_PEM_ENCODING.equals(encoding))
 			{
 				// Special case; this is not a real JCE supported encoding.
-				try (PEMParser pr = new PEMParser(new InputStreamReader(in)))
+				try (final var pr = new PEMParser(new InputStreamReader(in)))
 				{
 					certs = new ArrayList<X509Certificate>();
-					Object cert;
-
-					CertificateFactory cf = CertificateFactory.getInstance(X509_CERT_TYPE);
 
 					while (true)
 					{
-						cert = pr.readObject();
+						final var cert = pr.readObject();
 
 						if (cert == null)
 						{
 							break;
 						}
 
-						if (cert instanceof X509CertificateHolder)
+						if (cert  instanceof  X509CertificateHolder   x509CertHolder)
 						{
-							ByteArrayInputStream bais =
-							    new ByteArrayInputStream(((X509CertificateHolder) cert).getEncoded());
-							certs.add(cf.generateCertificate(bais));
+							final var bais = new ByteArrayInputStream(x509CertHolder.getEncoded());
+							certs.add((X509Certificate) cf.generateCertificate(bais));
 						}
 						// Skip other stuff, at least for now.
 					}
 				}
-			}
-			else
-			{
-				CertificateFactory cf = CertificateFactory.getInstance(X509_CERT_TYPE);
-
-				if (encoding != null)
-				{
-					// Try it as a certification path of the specified type
-					certs = cf.generateCertPath(in, encoding).getCertificates();
+			} else {
+				if (encoding != null) {
+					/*
+					 * Try it as a certification path of the specified type
+					 */
+					certs = uncheckedCast(cf.generateCertPath(in, encoding).getCertificates());
+				} else {
+					/*
+					 * "Normal" certificate(s)
+					 */
+					certs = uncheckedCast(cf.generateCertificates(in));
 				}
-				else
-				{
-					// "Normal" certificate(s)
-					certs = cf.generateCertificates(in);
-				}
-
-				// Note that we rely on cf.generateCert() above to never return null nor a collection
-				// containing nulls.
+				/*
+				 * Note that we rely on cf.generateCert() above to neither return null nor a collection containing nulls.
+				 */
 			}
+			return certs.toArray(new X509Certificate[certs.size()]);
 		}
 		// Some RuntimeExceptions which really should be CertificateExceptions may be thrown from
 		// cf.generateCert* above, for example Oracle's PKCS #7 parser tends to throw them... :P
-		catch (Exception ex)
+		catch (final Exception ex)
 		{
 			// TODO: don't throw if vCerts non-empty (eg. OpenSSL PEM above)?
 			throw new CryptoException(RB.getString("NoLoadCertificate.exception.message"), ex);
 		}
-
-		return (X509Certificate[]) certs.toArray(new X509Certificate[certs.size()]);
 	}
+
+	@SuppressWarnings("unchecked")
+	private static Collection<X509Certificate> uncheckedCast(final Collection<? extends Certificate> certCollection) {
+		return    (Collection<X509Certificate>)                                                      certCollection;
+	}
+	
 
 	/**
 	 * Load a CRL from the specified URL.
