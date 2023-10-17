@@ -175,7 +175,7 @@ public class FPortecle
 	private static final Preferences PREFS = Preferences.userNodeForPackage(FPortecle.class);
 
 	/** Minimum required BC version */
-	private static final Double REQ_BC_VERSION = 1.56;
+	private static final double REQ_BC_VERSION = 1.56;
 
 	/** Enable experimental features? */
 	private static final boolean EXPERIMENTAL = Boolean.getBoolean("portecle.experimental");
@@ -6514,8 +6514,8 @@ public class FPortecle
 
 			// Check BC version
 			@SuppressWarnings("deprecation")
-			final var bcVer = bcProv.getVersion();
-			if (REQ_BC_VERSION.compareTo(bcVer) > 0)
+			final var bcVer = bcProv.getVersion(); // (String comparison no good, so bite the deprecation bullet)
+			if (REQ_BC_VERSION > bcVer)
 			{
 				JOptionPane.showMessageDialog(new JFrame(),
 				    MessageFormat.format(RB.getString("FPortecle.NoBcVersion.message"), REQ_BC_VERSION, bcVer),
