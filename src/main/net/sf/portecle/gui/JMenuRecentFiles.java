@@ -31,6 +31,7 @@ import javax.swing.JMenu;
  * item shifting other files down and the list contains no duplicates. Note: only call the add(JMenuItemRecentFile) to
  * add recent file menu items when the menu is completely populated with standard menu items and separators.
  */
+@SuppressWarnings("serial")
 public class JMenuRecentFiles
     extends JMenu
 {

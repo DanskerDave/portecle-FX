@@ -44,6 +44,7 @@ import net.sf.portecle.gui.SwingHelper;
 /**
  * Modal dialog for displaying a Throwable message with the option to display the stack trace.
  */
+@SuppressWarnings("serial")
 public class DThrowable
     extends PortecleJDialog
 {

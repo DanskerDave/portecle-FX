@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the headers of the JAR Information table of DJarInfo.
  */
+@SuppressWarnings("serial")
 class JarInfoTableHeadRend
     extends DefaultTableCellRenderer
 {

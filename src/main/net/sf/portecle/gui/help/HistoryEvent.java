@@ -26,6 +26,7 @@ import java.util.EventObject;
 /**
  * Defines an event for reporting status changes in a History.
  */
+@SuppressWarnings("serial")
 /* package private */class HistoryEvent
     extends EventObject
 {

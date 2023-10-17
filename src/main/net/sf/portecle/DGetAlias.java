@@ -40,6 +40,7 @@ import net.sf.portecle.gui.SwingHelper;
 /**
  * Modal dialog used for entering a keystore alias.
  */
+@SuppressWarnings("serial")
 class DGetAlias
     extends PortecleJDialog
 {

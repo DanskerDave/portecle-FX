@@ -41,6 +41,7 @@ import net.sf.portecle.gui.SwingHelper;
 /**
  * An About dialog which displays about information and a button to access system information.
  */
+@SuppressWarnings("serial")
 public class DAbout
     extends PortecleJDialog
 {

@@ -35,6 +35,7 @@ import javax.swing.tree.TreeNode;
 /**
  * Custom cell renderer for the cells of the DProviderInfo tree.
  */
+@SuppressWarnings("serial")
 class ProviderTreeCellRend
     extends DefaultTreeCellRenderer
 {

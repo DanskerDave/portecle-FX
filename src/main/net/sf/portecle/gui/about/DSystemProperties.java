@@ -42,6 +42,7 @@ import net.sf.portecle.PortecleJDialog;
 /**
  * Modal dialog that displays the Java System Properties.
  */
+@SuppressWarnings("serial")
 /* package private */class DSystemProperties
     extends PortecleJDialog
 {

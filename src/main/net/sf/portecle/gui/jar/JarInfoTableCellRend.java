@@ -35,6 +35,7 @@ import net.sf.portecle.FPortecle;
 /**
  * Custom cell renderer for the cells of the Jar Information table of DJarInfo.
  */
+@SuppressWarnings("serial")
 class JarInfoTableCellRend
     extends DefaultTableCellRenderer
 {

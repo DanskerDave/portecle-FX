@@ -42,6 +42,7 @@ import net.sf.portecle.crypto.KeyPairUtil;
 /**
  * Modal dialog that generates a key pair which the user may cancel at any time by pressing the cancel button.
  */
+@SuppressWarnings("serial")
 class DGeneratingKeyPair
     extends PortecleJDialog
 {

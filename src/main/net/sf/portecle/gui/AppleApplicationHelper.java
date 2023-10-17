@@ -56,7 +56,7 @@ public class AppleApplicationHelper
 	{
 		try
 		{
-			Class applicationClass = forName("com.apple.eawt.Application");
+			Class<?> applicationClass = forName("com.apple.eawt.Application");
 			Object application = applicationClass.getMethod("getApplication").invoke(applicationClass);
 			applicationClass.getMethod("setDockIconImage", Image.class).invoke(application, image);
 		}

@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the headers of the System Properties table of DSystemProperties.
  */
+@SuppressWarnings("serial")
 class SystemPropertiesTableHeadRend
     extends DefaultTableCellRenderer
 {

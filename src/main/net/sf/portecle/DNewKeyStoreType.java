@@ -44,6 +44,7 @@ import net.sf.portecle.crypto.KeyStoreUtil;
 /**
  * Modal dialog used to retrieve the type to use in the creation of a new keystore.
  */
+@SuppressWarnings("serial")
 class DNewKeyStoreType
     extends PortecleJDialog
 {

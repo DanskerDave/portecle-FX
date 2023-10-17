@@ -51,6 +51,7 @@ import net.sf.portecle.gui.SwingHelper;
  * Modal dialog which displays general system information: OS, locale, Java version, Java vendor, Java vendor URL, JVM
  * total memory and JVM free memory.
  */
+@SuppressWarnings("serial")
 /* package private */class DSystemInformation
     extends PortecleJDialog
 {

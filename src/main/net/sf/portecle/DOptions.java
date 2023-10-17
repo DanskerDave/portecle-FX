@@ -50,6 +50,7 @@ import javax.swing.border.EmptyBorder;
 /**
  * Modal dialog to allow the users to configure Portecle options, CA certificates keystore, and look &amp; feel.
  */
+@SuppressWarnings("serial")
 class DOptions
     extends PortecleJDialog
 {
@@ -167,7 +168,7 @@ class DOptions
 			boolean bSupported = false;
 			try
 			{
-				LookAndFeel laf = (LookAndFeel) Class.forName(lookFeelInfo.getClassName()).newInstance();
+				LookAndFeel laf = (LookAndFeel) Class.forName(lookFeelInfo.getClassName()).getDeclaredConstructor().newInstance();
 				bSupported = laf.isSupportedLookAndFeel();
 			}
 			catch (Exception e)

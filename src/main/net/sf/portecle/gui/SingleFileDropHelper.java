@@ -39,6 +39,7 @@ import javax.swing.TransferHandler;
 /**
  * Drag and drop helper class that accepts single files.
  */
+@SuppressWarnings("serial")
 public class SingleFileDropHelper
     extends TransferHandler
 {

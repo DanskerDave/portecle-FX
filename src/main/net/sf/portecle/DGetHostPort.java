@@ -45,6 +45,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Modal dialog used for entering an IP address and a port.
  */
+@SuppressWarnings("serial")
 class DGetHostPort
     extends PortecleJDialog
 {

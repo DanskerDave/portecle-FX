@@ -35,6 +35,7 @@ import javax.swing.tree.TreeNode;
 /**
  * Custom cell renderer for the cells of the DKeyStoreReport tree.
  */
+@SuppressWarnings("serial")
 class ReportTreeCellRend
     extends DefaultTreeCellRenderer
 {

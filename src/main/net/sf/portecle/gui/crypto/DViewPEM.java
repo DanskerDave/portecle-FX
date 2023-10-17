@@ -56,6 +56,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Modal dialog to display an X.509 object's PEM encoding.
  */
+@SuppressWarnings("serial")
 public class DViewPEM
     extends PortecleJDialog
 {

@@ -80,6 +80,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Modal dialog to display a report on the contents of a supplied keystore.
  */
+@SuppressWarnings("serial")
 class DKeyStoreReport
     extends PortecleJDialog
 {
@@ -402,12 +403,12 @@ class DKeyStoreReport
 
 						// Subject
 						sbReport.append(MessageFormat.format(RB.getString("DKeyStoreReport.report.subject"),
-						    x509Cert.getSubjectDN()));
+						    x509Cert.getSubjectX500Principal()));
 						sbReport.append("\n");
 
 						// Issuer
 						sbReport.append(MessageFormat.format(RB.getString("DKeyStoreReport.report.issuer"),
-						    x509Cert.getIssuerDN()));
+						    x509Cert.getIssuerX500Principal()));
 						sbReport.append("\n");
 
 						// Serial Number
@@ -577,12 +578,12 @@ class DKeyStoreReport
 						// Subject
 						Element subjectElement = xmlDoc.createElement("subject");
 						certificateElement.appendChild(subjectElement);
-						subjectElement.appendChild(xmlDoc.createTextNode(x509Cert.getSubjectDN().toString()));
+						subjectElement.appendChild(xmlDoc.createTextNode(x509Cert.getSubjectX500Principal().toString()));
 
 						// Issuer
 						Element issuerElement = xmlDoc.createElement("issuer");
 						certificateElement.appendChild(issuerElement);
-						issuerElement.appendChild(xmlDoc.createTextNode(x509Cert.getIssuerDN().toString()));
+						issuerElement.appendChild(xmlDoc.createTextNode(x509Cert.getIssuerX500Principal().toString()));
 
 						// Serial Number
 						Element serialNumberElement = xmlDoc.createElement("serial_number");
@@ -743,10 +744,10 @@ class DKeyStoreReport
 						certNode.add(new DefaultMutableTreeNode("" + x509Cert.getVersion()));
 
 						// Subject
-						certNode.add(new DefaultMutableTreeNode(x509Cert.getSubjectDN()));
+						certNode.add(new DefaultMutableTreeNode(x509Cert.getSubjectX500Principal()));
 
 						// Issuer
-						certNode.add(new DefaultMutableTreeNode(x509Cert.getIssuerDN()));
+						certNode.add(new DefaultMutableTreeNode(x509Cert.getIssuerX500Principal()));
 
 						// Serial Number
 						StringBuilder sSerialNumber = StringUtil.toHex(x509Cert.getSerialNumber(), 4, " ");

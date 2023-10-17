@@ -53,6 +53,7 @@ import net.sf.portecle.PortecleJDialog;
 /**
  * Modal dialog to display information on the currently loaded security providers.
  */
+@SuppressWarnings("serial")
 public class DProviderInfo
     extends PortecleJDialog
 {

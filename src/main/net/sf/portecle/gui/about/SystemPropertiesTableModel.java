@@ -32,6 +32,7 @@ import net.sf.portecle.FPortecle;
 /**
  * The table model used to System Properties.
  */
+@SuppressWarnings("serial")
 class SystemPropertiesTableModel
     extends AbstractTableModel
 {

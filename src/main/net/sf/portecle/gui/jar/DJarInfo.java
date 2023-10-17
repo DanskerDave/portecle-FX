@@ -49,6 +49,7 @@ import net.sf.portecle.PortecleJDialog;
 /**
  * Modal dialog that displays information about the JAR files on the class path.
  */
+@SuppressWarnings("serial")
 public class DJarInfo
     extends PortecleJDialog
 {

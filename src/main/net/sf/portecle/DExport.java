@@ -49,6 +49,7 @@ import net.sf.portecle.crypto.CryptoException;
  * Modal dialog used to export keystore entries. A number of export types and formats are available depending on the
  * entries content.
  */
+@SuppressWarnings("serial")
 class DExport
     extends PortecleJDialog
 {

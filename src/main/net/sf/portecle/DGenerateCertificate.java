@@ -67,6 +67,7 @@ import net.sf.portecle.gui.error.DThrowable;
  * all of the certificate attributes of an X.509 certificate. The choice of available signature algorithms depends on
  * the key pair generation algorithm selected.
  */
+@SuppressWarnings("serial")
 class DGenerateCertificate
     extends PortecleJDialog
 {

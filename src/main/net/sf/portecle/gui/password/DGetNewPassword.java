@@ -41,6 +41,7 @@ import net.sf.portecle.PortecleJDialog;
 /**
  * Modal dialog used for entering and confirming a password.
  */
+@SuppressWarnings("serial")
 public class DGetNewPassword
     extends PortecleJDialog
 {

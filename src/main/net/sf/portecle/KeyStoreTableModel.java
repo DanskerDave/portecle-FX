@@ -34,6 +34,7 @@ import net.sf.portecle.crypto.KeyStoreType;
 /**
  * The table model used to display a keystore's entries sorted by alias name.
  */
+@SuppressWarnings("serial")
 class KeyStoreTableModel
     extends AbstractTableModel
 {

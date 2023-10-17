@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the cells of the RevokedCerts table of DViewCRL.
  */
+@SuppressWarnings("serial")
 class RevokedCertsTableCellRend
     extends DefaultTableCellRenderer
 {

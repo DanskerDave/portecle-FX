@@ -323,7 +323,7 @@ public final class X509CertUtil
 		// Find the root issuer (i.e. certificate where issuer is the same as subject)
 		for (X509Certificate aCert : tmpCerts)
 		{
-			if (aCert.getIssuerDN().equals(aCert.getSubjectDN()))
+			if (aCert.getIssuerX500Principal().equals(aCert.getSubjectX500Principal()))
 			{
 				issuerCert = aCert;
 				orderedCerts[iOrdered] = issuerCert;
@@ -345,7 +345,7 @@ public final class X509CertUtil
 			for (X509Certificate aCert : tmpCerts)
 			{
 				// Is this certificate the next in the chain?
-				if (aCert.getIssuerDN().equals(issuerCert.getSubjectDN()) && aCert != issuerCert)
+				if (aCert.getIssuerX500Principal().equals(issuerCert.getSubjectX500Principal()) && aCert != issuerCert)
 				{
 					// Yes
 					issuerCert = aCert;
@@ -720,7 +720,7 @@ public final class X509CertUtil
 	public static PKCS10CertificationRequest generatePKCS10CSR(X509Certificate cert, PrivateKey privateKey)
 	    throws CryptoException
 	{
-		X500Name subject = new X500Name(cert.getSubjectDN().toString());
+		X500Name subject = new X500Name(cert.getSubjectX500Principal().toString());
 
 		JcaPKCS10CertificationRequestBuilder csrBuilder =
 		    new JcaPKCS10CertificationRequestBuilder(subject, cert.getPublicKey());
@@ -814,14 +814,14 @@ public final class X509CertUtil
 		for (X509Certificate compCert : vCompCerts)
 		{
 			// Check if the Comparison certificate's subject is the same as the certificate's issuer
-			if (cert.getIssuerDN().equals(compCert.getSubjectDN()))
+			if (cert.getIssuerX500Principal().equals(compCert.getSubjectX500Principal()))
 			{
 				// If so verify with the comparison certificate's corresponding private key was used to sign
 				// the certificate
 				if (X509CertUtil.verifyCertificate(cert, compCert))
 				{
 					// If the keystore certificate is self-signed then a chain of trust exists
-					if (compCert.getSubjectDN().equals(compCert.getIssuerDN()))
+					if (compCert.getSubjectX500Principal().equals(compCert.getIssuerX500Principal()))
 					{
 						return new X509Certificate[] { cert, compCert };
 					}

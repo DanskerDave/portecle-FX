@@ -32,6 +32,7 @@ import net.sf.portecle.crypto.X509Ext;
 /**
  * The table model used to display X.509 extensions.
  */
+@SuppressWarnings("serial")
 class ExtensionsTableModel
     extends AbstractTableModel
 {

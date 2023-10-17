@@ -68,6 +68,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Modal dialog to display the details of a Certificate Revocation List (CRL).
  */
+@SuppressWarnings("serial")
 final class DViewCRL
     extends PortecleJDialog
 {
@@ -399,7 +400,7 @@ final class DViewCRL
 		m_jtfVersion.setCaretPosition(0);
 
 		// Issuer
-		m_jtfIssuer.setText(m_crl.getIssuerDN().toString());
+		m_jtfIssuer.setText(m_crl.getIssuerX500Principal().toString());
 		m_jtfIssuer.setCaretPosition(0);
 
 		// Effective Date (include time zone)

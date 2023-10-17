@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the headers of the keystore table of FPortecle.
  */
+@SuppressWarnings("serial")
 class KeyStoreTableHeadRend
     extends DefaultTableCellRenderer
 {

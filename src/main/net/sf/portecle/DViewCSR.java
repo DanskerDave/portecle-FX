@@ -61,6 +61,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Modal dialog to display the details of a certification request.
  */
+@SuppressWarnings("serial")
 class DViewCSR
     extends PortecleJDialog
 {

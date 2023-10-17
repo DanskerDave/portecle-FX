@@ -35,6 +35,7 @@ import net.sf.portecle.FPortecle;
 /**
  * The table model used to display information about JAR files.
  */
+@SuppressWarnings("serial")
 class JarInfoTableModel
     extends AbstractTableModel
 {

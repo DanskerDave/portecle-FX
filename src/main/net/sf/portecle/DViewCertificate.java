@@ -68,6 +68,7 @@ import net.sf.portecle.gui.error.DThrowable;
  * Modal dialog to display the details of one or more X.509 certificates. The details of one certificate are displayed
  * at a time with selector buttons allowing the movement to another of the certificates.
  */
+@SuppressWarnings("serial")
 class DViewCertificate
     extends PortecleJDialog
 {
@@ -594,11 +595,11 @@ class DViewCertificate
 		m_jtfVersion.setCaretPosition(0);
 
 		// Subject
-		m_jtfSubject.setText(cert.getSubjectDN().toString());
+		m_jtfSubject.setText(cert.getSubjectX500Principal().toString());
 		m_jtfSubject.setCaretPosition(0);
 
 		// Issuer
-		m_jtfIssuer.setText(cert.getIssuerDN().toString());
+		m_jtfIssuer.setText(cert.getIssuerX500Principal().toString());
 		m_jtfIssuer.setCaretPosition(0);
 
 		// Serial Number

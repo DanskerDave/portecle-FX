@@ -56,6 +56,7 @@ import net.sf.portecle.gui.SwingHelper;
  * Modal dialog used to choose the parameters required for key pair generation. The user may select an asymmetric key
  * generation algorithm of DSA or RSA and enter a key size in bits.
  */
+@SuppressWarnings("serial")
 class DGenerateKeyPair
     extends PortecleJDialog
 {

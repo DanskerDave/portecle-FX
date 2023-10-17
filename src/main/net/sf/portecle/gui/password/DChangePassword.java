@@ -42,6 +42,7 @@ import net.sf.portecle.PortecleJDialog;
  * Modal dialog used for entering and confirming a password and checking it against an old password which may or may not
  * have been supplied to the dialog.
  */
+@SuppressWarnings("serial")
 public class DChangePassword
     extends PortecleJDialog
 {

@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the headers of the Extensions table of DViewExtensions.
  */
+@SuppressWarnings("serial")
 class ExtensionsTableHeadRend
     extends DefaultTableCellRenderer
 {

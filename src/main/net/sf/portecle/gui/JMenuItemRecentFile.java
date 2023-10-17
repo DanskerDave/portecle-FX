@@ -32,6 +32,7 @@ import javax.swing.JMenuItem;
  * An action listener should be added to actually open the file. Other listeners can be added as required to respond to
  * other types of event.
  */
+@SuppressWarnings("serial")
 public class JMenuItemRecentFile
     extends JMenuItem
 {

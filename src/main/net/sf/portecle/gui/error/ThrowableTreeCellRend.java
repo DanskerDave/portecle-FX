@@ -34,6 +34,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 /**
  * Custom cell renderer for the cells of the DThrowableDetail tree.
  */
+@SuppressWarnings("serial")
 class ThrowableTreeCellRend
     extends DefaultTreeCellRenderer
 {

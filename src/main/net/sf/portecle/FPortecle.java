@@ -152,6 +152,7 @@ import static java.util.Arrays.asList;
 /**
  * Start class and main frame of Portecle.
  */
+@SuppressWarnings("serial")
 public class FPortecle
     extends JFrame
     implements StatusBar
@@ -5840,11 +5841,12 @@ public class FPortecle
 		{
 			putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(
 			    RB.getString("FPortecle.NewKeyStoreAction.accelerator").charAt(0), InputEvent.CTRL_MASK));
-			putValue(LONG_DESCRIPTION, RB.getString("FPortecle.NewKeyStoreAction.statusbar"));
-			putValue(MNEMONIC_KEY, Integer.valueOf(RB.getString("FPortecle.NewKeyStoreAction.mnemonic").charAt(0)));
-			putValue(NAME, RB.getString("FPortecle.NewKeyStoreAction.text"));
-			putValue(SHORT_DESCRIPTION, RB.getString("FPortecle.NewKeyStoreAction.tooltip"));
-			putValue(SMALL_ICON, new ImageIcon(getResImage("FPortecle.NewKeyStoreAction.image")));
+
+			putValue(LONG_DESCRIPTION,                  RB.getString("FPortecle.NewKeyStoreAction.statusbar"));
+			putValue(MNEMONIC_KEY,      Integer.valueOf(RB.getString("FPortecle.NewKeyStoreAction.mnemonic").charAt(0)));
+			putValue(NAME,                              RB.getString("FPortecle.NewKeyStoreAction.text"));
+			putValue(SHORT_DESCRIPTION,                 RB.getString("FPortecle.NewKeyStoreAction.tooltip"));
+			putValue(SMALL_ICON,        new    ImageIcon(getResImage("FPortecle.NewKeyStoreAction.image")));
 			setEnabled(true);
 		}
 
@@ -6490,7 +6492,7 @@ public class FPortecle
 			{
 				// Instantiate the Bouncy Castle provider
 				Class<?> bcProvClass = Class.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
-				bcProv = (Provider) bcProvClass.newInstance();
+				bcProv = (Provider) bcProvClass.getDeclaredConstructor().newInstance();
 
 				// Add BC as a security provider
 				Security.addProvider(bcProv);
@@ -6524,7 +6526,7 @@ public class FPortecle
 				try
 				{
 					Class<?> provClass = Class.forName(prov[1]);
-					Security.addProvider((Provider) provClass.newInstance());
+					Security.addProvider((Provider) provClass.getDeclaredConstructor().newInstance());
 				}
 				catch (Throwable t)
 				{

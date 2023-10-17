@@ -67,6 +67,7 @@ import net.sf.portecle.gui.error.DThrowable;
 /**
  * Displays the details of X.509 Extensions.
  */
+@SuppressWarnings("serial")
 class DViewExtensions
     extends PortecleJDialog
 {

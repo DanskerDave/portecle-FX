@@ -24,6 +24,7 @@ package net.sf.portecle.crypto;
 /**
  * Represents a cryptographic exception.
  */
+@SuppressWarnings("serial")
 public class CryptoException
     extends Exception
 {

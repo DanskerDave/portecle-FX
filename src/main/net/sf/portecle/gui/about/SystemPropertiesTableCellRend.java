@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 /**
  * Custom cell renderer for the cells of the System Properties table of DSystemProperties.
  */
+@SuppressWarnings("serial")
 class SystemPropertiesTableCellRend
     extends DefaultTableCellRenderer
 {

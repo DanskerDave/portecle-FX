@@ -45,6 +45,7 @@ import net.sf.portecle.crypto.ProviderUtil;
  *
  * @author Ville Skyttä
  */
+@SuppressWarnings("serial")
 /* package private */class DChoosePkcs11Provider
     extends PortecleJDialog
 {

@@ -31,6 +31,7 @@ import javax.swing.table.AbstractTableModel;
 /**
  * The table model used to display an array of X.509 CRL entries.
  */
+@SuppressWarnings("serial")
 class RevokedCertsTableModel
     extends AbstractTableModel
 {

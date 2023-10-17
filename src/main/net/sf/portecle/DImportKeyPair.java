@@ -67,6 +67,7 @@ import net.sf.portecle.gui.error.DThrowable;
  * Modal dialog that displays the details of all key pairs from a PKCS #12 keystore allowing the user to pick one for
  * import.
  */
+@SuppressWarnings("serial")
 class DImportKeyPair
     extends PortecleJDialog
 {

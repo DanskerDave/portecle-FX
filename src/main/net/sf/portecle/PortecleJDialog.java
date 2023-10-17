@@ -40,6 +40,7 @@ import javax.swing.KeyStroke;
 /**
  * Base class for Portecle's dialogs.
  */
+@SuppressWarnings("serial")
 public class PortecleJDialog
     extends JDialog
 {
